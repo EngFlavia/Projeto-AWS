@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mini Tarefas AWS</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-labelledby="app-title">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">AWS Cloud Lab</p>
+            <h1 id="app-title">Mini Tarefas</h1>
+          </div>
+          <div class="status-pill" id="mode-label">Local</div>
+        </header>
+
+        <form class="task-form" id="task-form">
+          <label for="task-title">Nova tarefa</label>
+          <div class="input-row">
+            <input id="task-title" name="title" type="text" autocomplete="off" maxlength="120" placeholder="Ex: Publicar frontend no S3">
+            <button type="submit">Adicionar</button>
+          </div>
+        </form>
+
+        <div class="toolbar">
+          <button class="filter-button is-active" type="button" data-filter="all">Todas</button>
+          <button class="filter-button" type="button" data-filter="open">Abertas</button>
+          <button class="filter-button" type="button" data-filter="done">Concluidas</button>
+        </div>
+
+        <section class="task-panel" aria-live="polite">
+          <div id="empty-state" class="empty-state">
+            <strong>Nenhuma tarefa ainda.</strong>
+            <span>Crie a primeira para testar o fluxo da aplicacao.</span>
+          </div>
+          <ul id="task-list" class="task-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

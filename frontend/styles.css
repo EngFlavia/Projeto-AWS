@@ -1,0 +1,261 @@
+:root {
+  color-scheme: light;
+  --bg: #f7f7f4;
+  --surface: #ffffff;
+  --surface-alt: #f0f5f2;
+  --text: #1d2521;
+  --muted: #66736d;
+  --line: #d9e0dc;
+  --accent: #13795b;
+  --accent-strong: #0f5f48;
+  --danger: #b42318;
+  --shadow: 0 16px 40px rgba(29, 37, 33, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(19, 121, 91, 0.12), transparent 34%),
+    linear-gradient(315deg, rgba(58, 91, 173, 0.10), transparent 32%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+.app-shell {
+  width: min(920px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  padding: 32px 0;
+}
+
+.workspace {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1;
+}
+
+.status-pill {
+  min-width: 84px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  color: var(--accent-strong);
+  text-align: center;
+  font-size: 0.86rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.task-form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.task-form label {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.input-row input {
+  min-width: 0;
+  height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 14px;
+  color: var(--text);
+  background: #fff;
+}
+
+.input-row input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(19, 121, 91, 0.14);
+  outline: 0;
+}
+
+.input-row button,
+.filter-button {
+  min-height: 44px;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.input-row button {
+  padding: 0 18px;
+  background: var(--accent);
+  color: #fff;
+}
+
+.input-row button:hover {
+  background: var(--accent-strong);
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+
+.filter-button {
+  padding: 0 14px;
+  background: #eef1ef;
+  color: var(--muted);
+}
+
+.filter-button.is-active {
+  background: #dcebe5;
+  color: var(--accent-strong);
+}
+
+.task-panel {
+  min-height: 280px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 12px;
+}
+
+.empty-state {
+  min-height: 254px;
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.empty-state strong {
+  color: var(--text);
+}
+
+.task-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.task-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.task-item.is-done .task-title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.task-check {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--accent);
+}
+
+.task-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.delete-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #fff1f0;
+  color: var(--danger);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.delete-button:hover {
+  background: #ffe1de;
+}
+
+.is-hidden {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    width: min(100% - 20px, 920px);
+    padding: 10px 0;
+  }
+
+  .workspace {
+    padding: 18px;
+  }
+
+  .topbar,
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    display: grid;
+  }
+
+  .input-row button {
+    width: 100%;
+    height: 48px;
+  }
+}

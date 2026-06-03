@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Mini app de tarefas para aprender AWS serverless.
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 10
+    MemorySize: 128
+    Architectures:
+      - x86_64
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref TasksTable
+
+Resources:
+  TasksTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+
+  TasksFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: tasks.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TasksTable
+      Events:
+        ListTasks:
+          Type: HttpApi
+          Properties:
+            Path: /tasks
+            Method: GET
+            ApiId: !Ref TasksApi
+        CreateTask:
+          Type: HttpApi
+          Properties:
+            Path: /tasks
+            Method: POST
+            ApiId: !Ref TasksApi
+        UpdateTask:
+          Type: HttpApi
+          Properties:
+            Path: /tasks/{id}
+            Method: PUT
+            ApiId: !Ref TasksApi
+        DeleteTask:
+          Type: HttpApi
+          Properties:
+            Path: /tasks/{id}
+            Method: DELETE
+            ApiId: !Ref TasksApi
+
+  TasksApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - "*"
+        AllowHeaders:
+          - Content-Type
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+
+Outputs:
+  ApiUrl:
+    Description: URL da API gerada pelo API Gateway.
+    Value: !Sub "https://${TasksApi}.execute-api.${AWS::Region}.amazonaws.com"
