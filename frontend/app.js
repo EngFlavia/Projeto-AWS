@@ -1,4 +1,4 @@
-const API_BASE_URL = "";
+const API_BASE_URL = "https://ax9k6tgqz9.execute-api.us-east-1.amazonaws.com/default";
 const STORAGE_KEY = "aws-mini-tasks";
 
 const form = document.querySelector("#task-form");
@@ -6,6 +6,7 @@ const input = document.querySelector("#task-title");
 const list = document.querySelector("#task-list");
 const emptyState = document.querySelector("#empty-state");
 const modeLabel = document.querySelector("#mode-label");
+const errorMessage = document.querySelector("#error-message");
 const filterButtons = document.querySelectorAll(".filter-button");
 
 const useApi = API_BASE_URL.trim().length > 0;
@@ -21,9 +22,13 @@ form.addEventListener("submit", async (event) => {
   const title = input.value.trim();
   if (!title) return;
 
-  await createTask(title);
-  input.value = "";
-  input.focus();
+  try {
+    await createTask(title);
+    input.value = "";
+    input.focus();
+  } catch (error) {
+    showError(error.message);
+  }
 });
 
 filterButtons.forEach((button) => {
@@ -39,15 +44,24 @@ list.addEventListener("click", async (event) => {
   const deleteButton = event.target.closest(".delete-button");
 
   if (checkbox) {
-    await updateTask(checkbox.dataset.id, checkbox.checked);
+    try {
+      await updateTask(checkbox.dataset.id, checkbox.checked);
+    } catch (error) {
+      checkbox.checked = !checkbox.checked;
+      showError(error.message);
+    }
   }
 
   if (deleteButton) {
-    await deleteTask(deleteButton.dataset.id);
+    try {
+      await deleteTask(deleteButton.dataset.id);
+    } catch (error) {
+      showError(error.message);
+    }
   }
 });
 
-loadTasks();
+loadTasks().catch((error) => showError(error.message));
 
 async function loadTasks() {
   tasks = useApi ? await apiRequest("/tasks") : readLocalTasks();
@@ -133,7 +147,14 @@ function writeLocalTasks() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
+function showError(message) {
+  errorMessage.textContent = `Erro na API: ${message}`;
+  errorMessage.classList.remove("is-hidden");
+}
+
 function render() {
+  errorMessage.classList.add("is-hidden");
+
   const visibleTasks = tasks.filter((task) => {
     if (activeFilter === "open") return !task.completed;
     if (activeFilter === "done") return task.completed;

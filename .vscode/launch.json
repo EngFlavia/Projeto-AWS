@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Abrir Mini Tarefas AWS",
+      "type": "pwa-msedge",
+      "request": "launch",
+      "url": "http://localhost:5500",
+      "preLaunchTask": "Iniciar servidor local"
+    },
+    {
+      "name": "Abrir Mini Tarefas AWS - Chrome",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:5500",
+      "preLaunchTask": "Iniciar servidor local"
+    }
+  ]
+}

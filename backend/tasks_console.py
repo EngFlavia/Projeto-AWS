@@ -13,7 +13,7 @@ table = dynamodb.Table(os.environ["TABLE_NAME"])
 def lambda_handler(event, context):
     try:
         method = event["requestContext"]["http"]["method"]
-        path = event.get("rawPath", "")
+        path = normalize_path(event.get("rawPath", ""))
 
         if method == "OPTIONS":
             return response(204)
@@ -80,6 +80,12 @@ def update_task(task_id, completed):
 
 def delete_task(task_id):
     table.delete_item(Key={"id": task_id})
+
+
+def normalize_path(path):
+    if path.startswith("/default/"):
+        return path.replace("/default", "", 1)
+    return path
 
 
 def response(status_code, body=None):

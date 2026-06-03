@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Iniciar servidor local",
+      "type": "shell",
+      "command": "node scripts/dev-server.js",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": ".",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Mini Tarefas AWS rodando",
+          "endsPattern": "Mini Tarefas AWS rodando"
+        }
+      }
+    }
+  ]
+}

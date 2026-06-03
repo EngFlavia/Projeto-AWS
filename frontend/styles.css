@@ -102,6 +102,13 @@ h1 {
   font-weight: 700;
 }
 
+.error-message {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
 .input-row {
   display: grid;
   grid-template-columns: 1fr auto;
